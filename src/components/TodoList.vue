@@ -5,7 +5,8 @@
         <input
           class="form-check-input"
           type="checkbox"
-          v-model="todo.completed"
+          :value="todo.completed"
+          @change="toggleTodo(index)"
         />
         <label
           :class="{ 'todo-done': todo.completed }"
@@ -31,6 +32,25 @@ export default {
       type: Array,
       required: true,
     },
+  },
+
+  emits: ["toggle-todo", "delete-todo"],
+
+  // 객체 구조 분해로 (props, context) -> (props, {emit})
+  // 장점: 코드가 간결해진다.
+  setup(props, { emit }) {
+    const toggleTodo = (index) => {
+      emit("toggle-todo", index);
+    };
+
+    const deleteTodo = (index) => {
+      emit("delete-todo", index);
+    };
+
+    return {
+      toggleTodo,
+      deleteTodo,
+    };
   },
 };
 </script>

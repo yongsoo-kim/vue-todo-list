@@ -20,7 +20,9 @@
 <script>
 import { ref } from "vue";
 export default {
-  setup(props, context) {
+  emits: ["add-todo"],
+
+  setup(props, { emit }) {
     const todo = ref("");
     const hasError = ref(false);
 
@@ -30,7 +32,7 @@ export default {
         hasError.value = true;
       } else {
         // 자식 컴포넌트에서 부모컴포넌트에서 자료를 보냄. 이때 이벤트이름, 보내고 싶은 데이터을 짝지어 emit에서 호출한다. ("add-todo")
-        context.emit("add-todo", {
+        emit("add-todo", {
           id: Date.now(),
           subject: todo.value,
           completed: false,
